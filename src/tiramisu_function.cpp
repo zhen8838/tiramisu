@@ -778,7 +778,7 @@ void function::dump_trimmed_time_processor_domain() const
 {
     // Create time space domain
 
-    if (ENABLE_DEBUG)
+    // if (ENABLE_DEBUG)
     {
         tiramisu::str_dump("\n\nTrimmed Time-processor domain:\n");
 
@@ -796,7 +796,7 @@ void function::dump_time_processor_domain() const
 {
     // Create time space domain
 
-    if (ENABLE_DEBUG)
+    // if (ENABLE_DEBUG)
     {
         tiramisu::str_dump("\n\nTime-processor domain:\n");
 
@@ -1309,7 +1309,7 @@ void function::add_iterator_name(const std::string &iteratorName)
 void function::gen_halide_obj(const std::string &obj_file_name, Halide::Target::OS os, Halide::Target::Arch arch, int bits, bool gen_python) const
 {
   Halide::Target target = Halide::get_host_target();
-  gen_halide_obj(obj_file_name, target.os, target.arch, target.bits, tiramisu::hardware_architecture_t::arch_cpu, gen_python = gen_python);
+  gen_halide_obj(obj_file_name, target.os, target.arch, target.bits, tiramisu::hardware_architecture_t::arch_cpu,  gen_python);
 }
 
 void function::gen_halide_obj(const std::string &obj_file_name, bool gen_python) const
@@ -1321,7 +1321,7 @@ void function::gen_halide_obj(const std::string &obj_file_name, bool gen_python)
 void function::gen_halide_obj(const std::string &obj_file_name, const tiramisu::hardware_architecture_t hw_architecture, bool gen_python) const
 {
   Halide::Target target = Halide::get_host_target();
-  gen_halide_obj(obj_file_name, target.os, target.arch, target.bits, hw_architecture, gen_python = gen_python);
+  gen_halide_obj(obj_file_name, target.os, target.arch, target.bits, hw_architecture, gen_python);
 }
 
 
@@ -1824,7 +1824,7 @@ void tiramisu::function::add_computation(computation *cpt)
 
 void tiramisu::function::dump(bool exhaustive) const
 {
-    if (ENABLE_DEBUG)
+    // if (ENABLE_DEBUG)
     {
         std::cout << "\n\nFunction \"" << this->name << "\"" << std::endl << std::endl;
 
@@ -1880,7 +1880,7 @@ void tiramisu::function::dump(bool exhaustive) const
 
 void tiramisu::function::dump_iteration_domain() const
 {
-    if (ENABLE_DEBUG)
+    // if (ENABLE_DEBUG)
     {
         tiramisu::str_dump("\nIteration domain:\n");
         for (const auto &cpt : this->body)
@@ -1893,7 +1893,7 @@ void tiramisu::function::dump_iteration_domain() const
 
 void tiramisu::function::dump_schedule() const
 {
-    if (ENABLE_DEBUG)
+    // if (ENABLE_DEBUG)
     {
         tiramisu::str_dump("\nDumping schedules of the function " + this->get_name() + " :\n");
 
@@ -2559,7 +2559,7 @@ void tiramisu::function::codegen(const std::vector<tiramisu::buffer *> &argument
         this->gen_cuda_stmt();
     }
     this->gen_halide_stmt();
-    this->gen_halide_obj(obj_filename, gen_python = gen_python);
+    this->gen_halide_obj(obj_filename, gen_python);
 }
 
 /*
@@ -3040,7 +3040,7 @@ bool tiramisu::function::loop_vectorization_is_legal(tiramisu::var i , std::vect
     bool result = this->loop_unrolling_is_legal(i,fused_computations)
                 && this->loop_parallelization_is_legal(i,fused_computations);
 
-    DEBUG(3, tiramisu::str_dump(" vectorization legality is : "+result));
+    DEBUG(3, tiramisu::str_dump(" vectorization legality is : " + std::to_string((int)result)));
 
     DEBUG_INDENT(-4);
 

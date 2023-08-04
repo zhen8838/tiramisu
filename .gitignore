@@ -19,3 +19,11 @@ configure.cmake
 3rdParty/*
 __pycache__
 .ipynb_checkpoints
+CMakePresets.json
+out
+.env
+.vscode
+*.o
+*.o.h
+*.o.py.cpp
+*.so

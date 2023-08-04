@@ -47,7 +47,7 @@ from Cython.Build.Inline import _get_build_extension
 from Cython.Build.Dependencies import cythonize
 tmp = hbuild
 dir = str(Path(tmp).parent)
-extension = Extension(name=funcname, language='c++', sources=[filename + '.py.cpp'], extra_objects=[filename], include_dirs=[dir + "/include"])
+extension = Extension(name=funcname, language='c++', sources=[filename + '.py.cpp'], extra_objects=[filename], include_dirs=[dir + "/include", os.environ.get("HALIDE_INCLUDE_DIRECTORY")], extra_compile_args=["-std=c++17"])
 build_extension = _get_build_extension()
 build_extension.extensions = cythonize([extension],
                                        include_path=[dir + "/include"], quiet=False)
@@ -75,7 +75,7 @@ from Cython.Build.Inline import _get_build_extension
 from Cython.Build.Dependencies import cythonize
 tmp = hbuild
 dir = str(Path(tmp).parent)
-extension = Extension(name=funcname, language='c++', sources=[filename + '.py.cpp'], extra_objects=[filename, dir + "/python_bindings/libHalide_PyStubs.a"], include_dirs=[dir + "/include"])
+extension = Extension(name=funcname, language='c++', sources=[filename + '.py.cpp'], extra_objects=[filename, dir + "/python_bindings/libHalide_PyStubs.a"], include_dirs=[dir + "/include", os.environ.get("HALIDE_INCLUDE_DIRECTORY")], extra_compile_args=["-std=c++17"])
 build_extension = _get_build_extension()
 build_extension.extensions = cythonize([extension],
                                        include_path=[dir + "/include"], quiet=False)

@@ -13,6 +13,10 @@ namespace tiramisu {
       auto function_class = py::class_<function>(m, "function")
 	.def(py::init<std::string>(), py::return_value_policy::reference)
 	.def("dump", &function::dump)
+	.def("dump_dep_graph", &function::dump_dep_graph)
+	.def("dump_iteration_domain", &function::dump_iteration_domain)
+	.def("dump_time_processor_domain", &function::dump_time_processor_domain)
+	.def("gen_isl_ast", &function::gen_isl_ast)
 	.def("gen_c_code", &function::gen_c_code)
 	.def("dump_halide_stmt", &function::dump_halide_stmt)
 	.def("codegen", py::overload_cast<const std::vector<tiramisu::buffer *> &, const std::string, const bool, bool>(&tiramisu::function::codegen));
@@ -34,7 +38,7 @@ from Cython.Build.Inline import _get_build_extension
 from Cython.Build.Dependencies import cythonize
 tmp = hbuild
 dir = str(Path(tmp).parent)
-extension = Extension(name=funcname, language='c++', sources=[filename + '.py.cpp'], extra_objects=[filename], include_dirs=[dir + "/include"])
+extension = Extension(name=funcname, language='c++', sources=[filename + '.py.cpp'], extra_objects=[filename], include_dirs=[dir + "/include", os.environ.get("HALIDE_INCLUDE_DIRECTORY")], extra_compile_args=["-std=c++17"])
 build_extension = _get_build_extension()
 build_extension.extensions = cythonize([extension],
                                        include_path=[dir + "/include"], quiet=False)
