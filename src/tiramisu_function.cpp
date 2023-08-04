@@ -9,6 +9,7 @@
 #include <isl/union_set.h>
 #include <isl/ast_build.h>
 #include <isl/ilp.h>
+#include <isl/val.h>
 
 #include <tiramisu/debug.h>
 #include <tiramisu/core.h>
