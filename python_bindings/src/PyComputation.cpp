@@ -51,6 +51,8 @@ namespace tiramisu {
             }
             throw std::invalid_argument("invalid number of arguments");
 	  }, py::return_value_policy::reference, py::keep_alive<0, 1>(), py::keep_alive<0, 2>())
+        .def("interchange", py::overload_cast<var, var>(&computation::interchange))
+        .def("interchange", py::overload_cast<int, int>(&computation::interchange))
         .def("parallelize", &computation::parallelize)
         .def("store_in", py::overload_cast<tiramisu::buffer*>(&computation::store_in),
 	     py::keep_alive<1, 2>())
@@ -70,11 +72,15 @@ namespace tiramisu {
         .def("gpu_tile", py::overload_cast<var, var, int, int, var, var, var, var>(&computation::gpu_tile))
         .def("gpu_tile", py::overload_cast<var, var, var, int, int, int>(&computation::gpu_tile))
         .def("gpu_tile", py::overload_cast<var, var, var, int, int, int, var, var, var, var, var, var>(&computation::gpu_tile))
+        .def("tag_distribute_level", py::overload_cast<int>(&computation::tag_distribute_level))
+        .def("tag_distribute_level", py::overload_cast<var>(&computation::tag_distribute_level))
         .def("then", py::overload_cast<computation&, var>(&computation::then), py::keep_alive<1, 2>())
-	.def("then", py::overload_cast<computation&, int>(&computation::then), py::keep_alive<1, 2>())
+	      .def("then", py::overload_cast<computation&, int>(&computation::then), py::keep_alive<1, 2>())
         .def("split", py::overload_cast<var, int>(&computation::split))
         .def("split", py::overload_cast<var, int, var, var>(&computation::split))
         .def("split", py::overload_cast<int, int>(&computation::split))
+        .def("vectorize", py::overload_cast<var, int>(&computation::split))
+        .def("vectorize", py::overload_cast<var, int, var, var>(&computation::split))
         .def("cache_shared", &computation::cache_shared)
         .def("get_buffer", &computation::get_buffer, py::return_value_policy::reference, py::keep_alive<0, 1>())
         .def("after_low_level", py::overload_cast<computation&, int>(&computation::after_low_level))
